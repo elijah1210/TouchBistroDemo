@@ -20,10 +20,7 @@ import actions from './App.actions';
 export const submitSieveNumberEpic = (action$, state$, { getJSON }) => action$.pipe(
   ofType(actions.submitSieveNumber.START),
   withLatestFrom(state$),
-  mergeMap(([, state]) => getJSON(`/api/sieve-number/${state.appReducer.inputNumber}`, {
-    'Content-Type': 'application/json',
-    'X-Requested-With': 'XMLHttpRequest',
-  }).pipe(
+  mergeMap(([, state]) => getJSON(`/api/sieve-number/${state.appReducer.inputNumber}`).pipe(
     map(response => actions.submitSieveNumber.success(response)),
     catchError(error => of(actions.submitSieveNumber.failure(error.xhr.response))),
   )),
