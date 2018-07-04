@@ -50,6 +50,8 @@ export default (state = initialState, action) => {
       return {
         ...state,
         inProgress: true,
+        hasPrimes: false,
+        submitted: false,
       }
     default:
       return state;
