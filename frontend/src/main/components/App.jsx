@@ -59,7 +59,7 @@ export class App extends Component {
               {hasError && errorMessage}
               {hasPrimes && `The median primes for ${inputNumber} are ${medianPrimes}.`}
               {submitted && !(hasPrimes || hasError) && `There are no median primes for ${inputNumber}.`}
-              {inProgress && `Calculation currently in progress.`}
+              {inProgress && 'Calculation currently in progress.'}
             </FormHelperText>
             <Button
               variant="contained"
