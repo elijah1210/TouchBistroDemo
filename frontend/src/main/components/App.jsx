@@ -27,6 +27,7 @@ export class App extends Component {
       hasError,
       hasPrimes,
       errorMessage,
+      submitted,
     } = this.props;
 
     return (
@@ -41,11 +42,6 @@ export class App extends Component {
           set of prime numbers less than your number.
         </p>
         <div className="App-inputs">
-          <pre>
-            {
-              JSON.stringify(this.props)
-            }
-          </pre>
           <FormControl error={hasError} id="appNumber">
             <InputLabel htmlFor="appNumberInput" id="appNumberLabel">
               Numeric Input
@@ -59,6 +55,7 @@ export class App extends Component {
             <FormHelperText id="appNumberInputHelperText">
               {hasError && errorMessage}
               {hasPrimes && `The median primes for ${inputNumber} are ${medianPrimes}.`}
+              {submitted && !(hasPrimes || hasError) && `There are no median primes for ${inputNumber}`}
             </FormHelperText>
             <Button
               variant="contained"
@@ -82,6 +79,7 @@ App.propTypes = {
   hasError: PropTypes.bool.isRequired,
   hasPrimes: PropTypes.bool.isRequired,
   errorMessage: PropTypes.string.isRequired,
+  submitted: PropTypes.bool.isRequired,
 };
 
 const mapDispatchToProps = dispatch => ({

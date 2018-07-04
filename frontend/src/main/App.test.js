@@ -21,6 +21,7 @@ describe('<App />', () => {
         hasError={false}
         hasPrimes={false}
         errorMessage=""
+        submitted
       />, div,
     );
   });
@@ -43,6 +44,7 @@ describe('App Reducer', () => {
       ...reducerInitialState,
       hasError: true,
       errorMessage: 'ACTION_FAILED',
+      submitted: true,
     };
 
     const action = actions.submitSieveNumber.failure({ message: 'ACTION_FAILED' });
@@ -55,9 +57,10 @@ describe('App Reducer', () => {
       ...reducerInitialState,
       medianPrimes: [3, 5],
       hasPrimes: true,
+      submitted: true,
     };
 
-    const action = actions.submitSieveNumber.success({ response: [3, 5] });
+    const action = actions.submitSieveNumber.success([3, 5]);
 
     expect(appReducer(reducerInitialState, action)).toEqual(stateAfter);
   });

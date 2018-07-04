@@ -1,4 +1,3 @@
-import { isEmpty } from 'lodash';
 import actions from './App.actions';
 
 // Initial state for redux.
@@ -8,6 +7,7 @@ export const initialState = {
   medianPrimes: [],
   hasPrimes: false,
   errorMessage: '',
+  submitted: false,
 };
 
 /**
@@ -22,11 +22,12 @@ export default (state = initialState, action) => {
         medianPrimes: payload,
         hasError: false,
         hasPrimes: payload.length > 0,
+        submitted: true,
       };
     case actions.inputNumberChange.type:
       return {
         ...state,
-        inputNumber: !isEmpty(payload) ? payload : 0,
+        inputNumber: payload || 0,
         hasError: false,
         errorMessage: '',
         hasPrimes: false,
@@ -39,6 +40,7 @@ export default (state = initialState, action) => {
         errorMessage: payload.message,
         medianPrimes: [],
         hasPrimes: false,
+        submitted: true,
       };
     case actions.submitSieveNumber.START:
     default:
