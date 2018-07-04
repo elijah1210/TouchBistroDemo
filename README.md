@@ -1,5 +1,6 @@
 ## Touch Bistro Demo
 ==============================
+
 Steps to run the application
 
 - `npm run update` in the root folder to install all dependencies.
