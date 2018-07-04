@@ -1,5 +1,4 @@
 ## Touch Bistro Demo
-==============================
 
 Steps to run the application
 
