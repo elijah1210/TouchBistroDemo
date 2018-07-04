@@ -55,7 +55,7 @@ export class App extends Component {
             <FormHelperText id="appNumberInputHelperText">
               {hasError && errorMessage}
               {hasPrimes && `The median primes for ${inputNumber} are ${medianPrimes}.`}
-              {submitted && !(hasPrimes || hasError) && `There are no median primes for ${inputNumber}`}
+              {submitted && !(hasPrimes || hasError) && `There are no median primes for ${inputNumber}.`}
             </FormHelperText>
             <Button
               variant="contained"

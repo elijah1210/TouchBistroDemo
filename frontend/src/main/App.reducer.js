@@ -32,6 +32,7 @@ export default (state = initialState, action) => {
         errorMessage: '',
         hasPrimes: false,
         medianPrimes: [],
+        submitted: false,
       };
     case actions.submitSieveNumber.FAILURE:
       return {
