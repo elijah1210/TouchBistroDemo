@@ -13,6 +13,11 @@ describe('AppServer', () => {
     expect(response.body).toEqual([3, 5]);
   });
 
+  it('shall respond with a body of [7] when the parameter is provided and parameter = 18.', async () => {
+    const response = await request(app).get('/api/sieve-number/18');
+    expect(response.body).toEqual([7]);
+  });
+
   it('shall respond with status 412 when the parameter is provided and parameter = 0.', async () => {
     const response = await request(app).get('/api/sieve-number/0');
     expect(response.statusCode).toBe(412);
@@ -41,5 +46,10 @@ describe('AppServer', () => {
   it('shall respond with status 412 when the parameter exceeds max sieve.', async () => {
     const response = await request(app).get(`/api/sieve-number/${helper.MAX_SIEVE + 1}`);
     expect(response.statusCode).toBe(412);
+  });
+
+  it('shall respond with status 404 when the URL is not formatted like /api/sieve-number/:sieveNumber?.', async () => {
+    const response = await request(app).get(`/api/sievetest/${helper.MAX_SIEVE - 50}`);
+    expect(response.statusCode).toBe(404);
   });
 });
