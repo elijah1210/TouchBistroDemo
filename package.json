@@ -2,20 +2,18 @@
   "name": "touch-bistro-demo",
   "version": "0.1.0",
   "private": true,
-  "dependencies": {
-  },
+  "dependencies": {},
   "proxy": "http://localhost:8080",
   "scripts": {
     "frontend": "cd ./frontend && npm run start",
-    "frontend:test":"cd ./frontend && npm run test",
+    "frontend:test": "cd ./frontend && npm run test",
     "server": "cd ./server && node server.js",
-    "server:test":"cd ./server && npm run test",
+    "server:test": "cd ./server && npm run test",
     "start": "start npm run frontend && start npm run server",
     "test": "start npm run frontend:test && start npm run server:test",
-    "update":"npm run update:frontend && npm run update:server",
-    "update:frontend":"cd ./frontend && npm i",
-    "update:server":"cd ./server && npm i"
-
+    "update": "npm i && npm run update:frontend && npm run update:server",
+    "update:frontend": "cd ./frontend && npm i",
+    "update:server": "cd ./server && npm i"
   },
   "devDependencies": {
     "eslint": "^4.19.1",
