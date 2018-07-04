@@ -47,4 +47,9 @@ describe('AppServer', () => {
     const response = await request(app).get(`/api/sieve-number/${helper.MAX_SIEVE + 1}`);
     expect(response.statusCode).toBe(412);
   });
+
+  it('shall respond with status 404 when the URL is not formatted like /api/sieve-number/:sieveNumber?.', async () => {
+    const response = await request(app).get(`/api/sievetest/${helper.MAX_SIEVE - 50}`);
+    expect(response.statusCode).toBe(404);
+  });
 });
