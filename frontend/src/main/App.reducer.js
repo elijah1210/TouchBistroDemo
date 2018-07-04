@@ -8,6 +8,7 @@ export const initialState = {
   hasPrimes: false,
   errorMessage: '',
   submitted: false,
+  inProgress: false,
 };
 
 /**
@@ -23,11 +24,12 @@ export default (state = initialState, action) => {
         hasError: false,
         hasPrimes: payload.length > 0,
         submitted: true,
+        inProgress: false,
       };
     case actions.inputNumberChange.type:
       return {
         ...state,
-        inputNumber: payload || 0,
+        inputNumber: payload,
         hasError: false,
         errorMessage: '',
         hasPrimes: false,
@@ -42,8 +44,13 @@ export default (state = initialState, action) => {
         medianPrimes: [],
         hasPrimes: false,
         submitted: true,
+        inProgress: false,
       };
     case actions.submitSieveNumber.START:
+      return {
+        ...state,
+        inProgress: true,
+      }
     default:
       return state;
   }

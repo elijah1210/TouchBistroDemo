@@ -22,6 +22,7 @@ describe('<App />', () => {
         hasPrimes={false}
         errorMessage=""
         submitted
+        inProgress={false}
       />, div,
     );
   });
@@ -39,15 +40,13 @@ describe('App Reducer', () => {
     expect(appReducer(reducerInitialState, action)).toEqual(stateAfter);
   });
 
-  it('shall handle submit sieve failure action.', () => {
+  it('shall handle submit sieve start action.', () => {
     const stateAfter = {
       ...reducerInitialState,
-      hasError: true,
-      errorMessage: 'ACTION_FAILED',
-      submitted: true,
+      inProgress: true,
     };
 
-    const action = actions.submitSieveNumber.failure({ message: 'ACTION_FAILED' });
+    const action = actions.submitSieveNumber.start();
 
     expect(appReducer(reducerInitialState, action)).toEqual(stateAfter);
   });
@@ -61,6 +60,19 @@ describe('App Reducer', () => {
     };
 
     const action = actions.submitSieveNumber.success([3, 5]);
+
+    expect(appReducer(reducerInitialState, action)).toEqual(stateAfter);
+  });
+
+  it('shall handle submit sieve failure action.', () => {
+    const stateAfter = {
+      ...reducerInitialState,
+      hasError: true,
+      errorMessage: 'ACTION_FAILED',
+      submitted: true,
+    };
+
+    const action = actions.submitSieveNumber.failure({ message: 'ACTION_FAILED' });
 
     expect(appReducer(reducerInitialState, action)).toEqual(stateAfter);
   });

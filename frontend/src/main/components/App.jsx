@@ -28,6 +28,7 @@ export class App extends Component {
       hasPrimes,
       errorMessage,
       submitted,
+      inProgress,
     } = this.props;
 
     return (
@@ -51,16 +52,20 @@ export class App extends Component {
               type="number"
               onChange={this.handleInputChange}
               value={inputNumber}
+              autoFocus
+              inputProps={{ min: 0, max: 10000000 }}
             />
             <FormHelperText id="appNumberInputHelperText">
               {hasError && errorMessage}
               {hasPrimes && `The median primes for ${inputNumber} are ${medianPrimes}.`}
               {submitted && !(hasPrimes || hasError) && `There are no median primes for ${inputNumber}.`}
+              {inProgress && `Calculation currently in progress.`}
             </FormHelperText>
             <Button
               variant="contained"
               color="primary"
               onClick={submitNumber}
+              disabled={inProgress}
             >
             Submit
             </Button>
@@ -80,6 +85,7 @@ App.propTypes = {
   hasPrimes: PropTypes.bool.isRequired,
   errorMessage: PropTypes.string.isRequired,
   submitted: PropTypes.bool.isRequired,
+  inProgress: PropTypes.bool.isRequired,
 };
 
 const mapDispatchToProps = dispatch => ({
