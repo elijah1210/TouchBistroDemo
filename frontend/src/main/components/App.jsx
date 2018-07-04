@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Input from '@material-ui/core/Input';
 import Button from '@material-ui/core/Button';
+import InputLabel from '@material-ui/core/InputLabel';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControl from '@material-ui/core/FormControl';
 import PropTypes from 'prop-types';
 
 import actions from '../App.actions';
@@ -21,8 +24,11 @@ export class App extends Component {
       submitNumber,
       inputNumber,
       medianPrimes,
+      hasError,
+      hasPrimes,
+      errorMessage,
     } = this.props;
-    console.log(medianPrimes);
+
     return (
       <div className="App">
         <header className="App-header">
@@ -40,18 +46,28 @@ export class App extends Component {
               JSON.stringify(this.props)
             }
           </pre>
-          <Input
-            type="number"
-            onChange={this.handleInputChange}
-            value={inputNumber}
-          />
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={submitNumber}
-          >
+          <FormControl error={hasError} id="appNumber">
+            <InputLabel htmlFor="appNumberInput" id="appNumberLabel">
+              Numeric Input
+            </InputLabel>
+            <Input
+              id="appNumberInput"
+              type="number"
+              onChange={this.handleInputChange}
+              value={inputNumber}
+            />
+            <FormHelperText id="appNumberInputHelperText">
+              {hasError && errorMessage}
+              {hasPrimes && `The median primes for ${inputNumber} are ${medianPrimes}.`}
+            </FormHelperText>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={submitNumber}
+            >
             Submit
-          </Button>
+            </Button>
+          </FormControl>
         </div>
       </div>
     );
@@ -60,9 +76,12 @@ export class App extends Component {
 
 App.propTypes = {
   submitNumber: PropTypes.func.isRequired,
-  updateInputNumber: PropTypes.func.isRequired,
   inputNumber: PropTypes.number.isRequired,
+  updateInputNumber: PropTypes.func.isRequired,
   medianPrimes: PropTypes.arrayOf(PropTypes.number).isRequired,
+  hasError: PropTypes.bool.isRequired,
+  hasPrimes: PropTypes.bool.isRequired,
+  errorMessage: PropTypes.string.isRequired,
 };
 
 const mapDispatchToProps = dispatch => ({

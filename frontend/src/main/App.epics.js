@@ -17,17 +17,16 @@ import actions from './App.actions';
  * @param {*} state$ State stream
  * @param {*} param2 Dependencies
  */
-export const submitSieveNumberEpic = (action$, state$, { post }) => action$.pipe(
+export const submitSieveNumberEpic = (action$, state$, { getJSON }) => action$.pipe(
   ofType(actions.submitSieveNumber.START),
   withLatestFrom(state$),
-  mergeMap(([, state]) => post('http://localhost:3000/api/ping', { sieveNumber: state.appReducer.inputNumber }, {
+  mergeMap(([, state]) => getJSON(`/api/sieve-number/${state.appReducer.inputNumber}`, {
     'Content-Type': 'application/json',
     'X-Requested-With': 'XMLHttpRequest',
-  })
-    .pipe(
-      map(response => actions.submitSieveNumber.success(response)),
-      catchError(error => of(actions.submitSieveNumber.failure(error.xhr.response))),
-    )),
+  }).pipe(
+    map(response => actions.submitSieveNumber.success(response)),
+    catchError(error => of(actions.submitSieveNumber.failure(error.xhr.response))),
+  )),
 );
 
 export default combineEpics(submitSieveNumberEpic);

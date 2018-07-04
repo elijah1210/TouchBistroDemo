@@ -1,7 +1,8 @@
 const express = require('express');
-const bodyParser = require('body-parser');
-const path = require('path');
 const assert = require('assert');
+const path = require('path');
+const bodyParser = require('body-parser');
+const _ = require('lodash');
 
 const app = express();
 
@@ -13,7 +14,12 @@ const app = express();
  * @param {*} next Function to continue execution.
  */
 const clientErrorHandler = (err, req, res, next) => {
-  if (req.xhr) {
+  if (err instanceof assert.AssertionError) {
+    res.status(500).json({
+      type: 'AssertionError',
+      message: err.message,
+    });
+  } else if (req.xhr) {
     res.status(500).send({ error: err });
   } else {
     next(err);
@@ -64,15 +70,21 @@ const medianCalc = (array) => {
     output.push(array[half]);
   }
 
-  return output;
+  return _.filter(output, element => !_.isNil(element)) || [];
 };
 
 app.use(express.static(path.join(__dirname, 'build')));
 app.use(bodyParser.json());
 
-app.post('/api/ping', (req, res) => {
-  assert(req.body.sieveNumber > 0, 'Number to call the sieve algorithm must be greater than 0.');
-  const output = medianCalc(eratosCalc(req.body.sieveNumber));
+app.get('/api/sieve-number/:sieveNumber', (req, res) => {
+  assert(!_.isEmpty(req.params), 'Parameters must be provided.');
+
+  // Convert the passed value to a number.
+  const sieveNumber = _.toNumber(req.params.sieveNumber);
+  assert(_.isFinite(sieveNumber), 'Number to call the sieve algorithm must be finite.');
+  assert(sieveNumber > 0, 'Number to call the sieve algorithm must be greater than 0.');
+
+  const output = medianCalc(eratosCalc(sieveNumber));
 
   res.json(output);
 });
